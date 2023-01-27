@@ -2,6 +2,7 @@ const quoteText = document.getElementById("quote");
 const authorText = document.getElementById("author");
 const loader = document.getElementById("loader");
 const quateContainer = document.getElementById("quote-container");
+const copyBtn = document.getElementById("copy");
 
 function loading() {
     loader.hidden = false;
@@ -17,7 +18,7 @@ function complete() {
 
 async function getQuote(){
     loading();
-    const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
     const apiUrl = 'https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json';
     try {
         const response= await fetch(proxyUrl + apiUrl);
@@ -46,16 +47,14 @@ function tweetquote() {
     const  quote =quoteText.innerText;
     const  author =authorText.innerText;
     const twitterUrl = 'https://twitter.com/intent/tweet?text='+quote+' - '+author;
-    window.open(twitterUrl, '_blank');
-}
-function setUrl() {
-    document.getElementById("fb-share").setAttribute( 'data-href', document.URL);
-}
+    window.open(twitterUrl, '_blank');}
 
 // event listner
-//document.getElementById("facebook").addEventListener('click', setUrl);
+
 document.getElementById("new-quote").addEventListener('click', getQuote);
 document.getElementById("twitter").addEventListener('click', tweetquote);
+copyBtn.addEventListener("click", ()=>{navigator.clipboard.writeText(quoteText.innerText);});
+
 //On load
 document.getElementById("fb-share").setAttribute( 'data-href', document.URL);
 getQuote();
